@@ -47,3 +47,4 @@ build
 .springBeans
 .classpath
 .settings
+.externalToolBuilders
