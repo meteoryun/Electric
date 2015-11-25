@@ -43,3 +43,7 @@ _svn
 */.git/*
 #self declare away#
 build
+.project
+.springBeans
+.classpath
+.settings
