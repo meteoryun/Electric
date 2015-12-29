@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+    <!-- 数据库连接信息
+        <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
+        <property name="hibernate.connection.password">qaz21390</property>
+        <property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3306/electric</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property> -->
+        
+        <!-- 其它选择配置 
+        <property name="hibernate.connection.pool_size">1</property>-->
+        <!-- 启用事务自动提交 针对dao层测试
+        <property name="hibernate.connection.autocommit">true</property> -->
+        <!--  
+        <property name="hibernate.current_session_context_class">thread</property>-->
+        <!-- 是否使用缓存，这里设为不启用缓存 -->
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+        
+        <!-- 资源文件 -->
+        <mapping resource="com/meteor/electric/domain/start/ElectricText.hbm.xml"/>
+        <mapping resource="com/meteor/electric/domain/system/RunMonitorCommonInfo.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>

@@ -42,9 +42,3 @@ _svn
 .deployables
 */.git/*
 #self declare away#
-build
-.project
-.springBeans
-.classpath
-.settings
-.externalToolBuilders
