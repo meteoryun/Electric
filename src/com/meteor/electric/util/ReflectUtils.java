@@ -45,9 +45,11 @@ public final class ReflectUtils {
 	
 	/**
 	 * 调用给定的方法,并返回对应值
-	 * @param methodName
-	 * @param t
-	 * @return
+	 * @param methodName (指定的方法名称)
+	 * @param t (被调用方法指定的类)
+	 * @param parameterTypes (指定方法的参数类型)
+	 * @param args (方法中对应的参数)
+	 * @return obj (方法返回的值)
 	 */
 	public static <T> Object invokeSpecificMethod(String methodName,T t,Class<?> [] parameterTypes,Object... args){
 		if(StringUtils.isBlank(methodName) || null == t){
