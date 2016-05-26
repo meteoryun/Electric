@@ -59,11 +59,11 @@ public final class GenericTypeConversion {
 	 * @param t
 	 * @return
 	 */
-	public static <T> Map<String,Object[]> cunstomConditionFindAssemble(T t){
+	public static <T> Map<String,Object[]> cunstomConditionFindAssemble(T t,boolean flag){
 		//查询条件
 		StringBuilder condition = new StringBuilder();
 		//取得规则之内成员变量
-		Map<String,Object> fieldsName = ReflectUtils.obtainClassDeclarsFields(t.getClass());
+		Map<String,String> fieldsName = ReflectUtils.obtainClassDeclarsFields(t.getClass());
 		//可变参数
 		List<Object> params = new ArrayList<Object>();
 		Set<String> keyNames = fieldsName.keySet();
@@ -74,8 +74,13 @@ public final class GenericTypeConversion {
 			Object methodReturnValue = ReflectUtils.invokeSpecificMethod(methodName, t, new Class<?>[]{} , new Object[]{});
 			if(null == methodReturnValue) continue;
 			else{
-				condition.append(" and " + GenericTypeConversion.firstToLowerCase(t.getClass().getSimpleName()) + "." + fieldName + " like ?");
-				params.add("%" + methodReturnValue + "%");
+				if(flag){
+					condition.append(" and " + GenericTypeConversion.firstToLowerCase(t.getClass().getSimpleName()) + "." + fieldName + "=?");
+					params.add(methodReturnValue);
+				}else{
+					condition.append(" and " + GenericTypeConversion.firstToLowerCase(t.getClass().getSimpleName()) + "." + fieldName + " like ?");
+					params.add("%" + methodReturnValue + "%");
+				}
 			}
 		}
 		
@@ -88,5 +93,19 @@ public final class GenericTypeConversion {
 		result.put(condition.toString(), params.toArray());
 		logger.info("generator condition:[" + t.getClass().getName() + ":" +  condition.toString() + "]-" + params);
 		return result;
+	}
+	
+	public static Object byTypeObtainGenerate(String key,Map<String,String> maps,Object value){
+		
+		switch(maps.get(key)){
+		case "java.lang.String" :
+			return "'" + value + "'";
+		case "java.util.Date" :
+			return "'" + value + "'";
+		case "java.lang.Character" :
+			return "'" + value + "'";
+		default :
+			return value;
+		}
 	}
 }

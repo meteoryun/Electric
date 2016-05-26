@@ -46,7 +46,7 @@ public class ElectricTextServiceImpl implements ElectricTextService {
 			logger.error("no instances class " + ElectricText.class.getName(), new NullPointerException());
 			return null;
 		}
-		Map<String,Object[]> assembleCondition = GenericTypeConversion.cunstomConditionFindAssemble(electricText);
+		Map<String,Object[]> assembleCondition = GenericTypeConversion.cunstomConditionFindAssemble(electricText,false);
 		return	electricTextDao.customConditionFind(assembleCondition);
 	}
 

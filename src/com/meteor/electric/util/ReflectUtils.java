@@ -23,8 +23,8 @@ public final class ReflectUtils {
 	 * @param clazz
 	 * @return Map<String,Object>
 	 */
-	public static <T> Map<String,Object> obtainClassDeclarsFields(Class<T> clazz){
-		Map<String,Object> fieldTypeNameMappings = new HashMap<String,Object>();
+	public static <T> Map<String,String> obtainClassDeclarsFields(Class<T> clazz){
+		Map<String,String> fieldTypeNameMappings = new HashMap<String,String>();
 		if(null == clazz){
 			logger.error("clazz is empty!");
 			return null;

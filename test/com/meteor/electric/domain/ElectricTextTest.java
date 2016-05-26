@@ -13,6 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.meteor.electric.dao.start.ElectricTextDao;
 import com.meteor.electric.domain.start.ElectricText;
 import com.meteor.electric.service.start.ElectricTextService;
+import com.meteor.electric.util.GenericTypeConversion;
 
 public class ElectricTextTest {
 	
@@ -104,8 +105,11 @@ public class ElectricTextTest {
 		ElectricText electricText = new ElectricText();
 		electricText.setTextName("service");
 		electricText.setTextRemark("service");
+		electricText.setTextDate(new Date());
 		
-		service.findCollectionCustomCondition(electricText);
+		System.out.println(GenericTypeConversion.cunstomConditionFindAssemble(electricText, true));
+		
+		//service.findCollectionCustomCondition(electricText);
 		
 		ClassPathXmlApplicationContext path = (ClassPathXmlApplicationContext)context;
 		path.close();

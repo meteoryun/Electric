@@ -43,6 +43,75 @@
 		checkTextAreaLen();
   }
   
+  /**添加带百分比的进度条*/
+	var xmlHttp;
+	//创建ajax引擎
+	function createXMLHttpRequest() {
+  	if (window.XMLHttpRequest) {
+  		xmlHttp = new XMLHttpRequest();
+		} else if (window.ActiveXObject) {
+  		try {
+    			xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+  		} catch (e1) {
+    			try {
+      			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+    			} catch (e2) {
+    			}
+  		}
+		}
+	}
+	
+	function loading() {
+		createXMLHttpRequest();
+		clearLoad();
+		var url = "elecCommonMsgAction_progressBar.do";
+		xmlHttp.open("GET", url, true);
+		xmlHttp.onreadystatechange = createCallback;
+		xmlHttp.send(null);
+	}
+	
+	function createCallback() {
+		if (xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) {
+				//每隔1秒钟执行一次percentServer()方法，直到当前访问结束
+				setTimeout("percentServer()", 1000);
+			}
+		}
+	}
+	
+	function percentServer() {
+		createXMLHttpRequest();
+		var url = "elecCommonMsgAction_progressBar.do";
+		xmlHttp.open("GET", url, true);
+		xmlHttp.onreadystatechange = updateCallback;
+		xmlHttp.send(null);
+	}
+	
+	function updateCallback() {
+		if (xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) {
+				//获取XML数据中的percent存放的百分比的值
+				var percent_complete = xmlHttp.responseXML.getElementsByTagName("percent")[0].firstChild.data;
+				var tdOne = document.getElementById("tdOne");
+				var progressPersent = document.getElementById("progressPersent");
+				//改变蓝色区域的宽度
+				tdOne.width = percent_complete + "%";
+				//将百分比的数值显示到页面上
+				progressPersent.innerHTML = percent_complete + "%";
+				//如果计算获取的百分比的数值没有达到100，则继续调用方法，直到操作结束为止
+				if (percent_complete < 100) {
+					setTimeout("percentServer()", 1000);
+				}
+			}
+		}
+	} 
+	
+	function clearLoad() {
+		document.getElementById("load").style.display="";
+		document.getElementById("opperate1").style.display="none";
+	    document.getElementById("opperate2").style.display="none";
+	}
+  
   </script>
 
 
@@ -50,7 +119,7 @@
 
 <body>
 <form name="Form1" id="Form1" method="post">
-    <table cellSpacing="1" cellPadding="0" width="90%" align="center" bgColor="#f5fafe" border="0">
+    <table id="opperate1" cellSpacing="1" cellPadding="0" width="90%" align="center" bgColor="#f5fafe" border="0">
 		<TBODY>
 			<TR height=10><td></td></TR>			
 			<tr>
@@ -99,7 +168,7 @@
 	</table>
 </form>
 <form name="Form2" id="Form2"  method="post">
-	<table cellspacing="1" cellpadding="5" width="90%" align="center" bgcolor="#f5fafe" style="border:1px solid #8ba7e3" border="0">
+	<table id="opperate2" cellspacing="1" cellpadding="5" width="90%" align="center" bgcolor="#f5fafe" style="border:1px solid #8ba7e3" border="0">
 
         <tr>
 			<td class="ta_01" colspan=2 align="center" background="${pageContext.request.contextPath }/images/b-info.gif">
@@ -129,6 +198,31 @@
 						 onclick="openWindow('${pageContext.request.contextPath }/system/exportExcel.jsp?belongTo=5-3','700','400')">&nbsp;&nbsp;
 			</td>
 		</tr>
+	</table>
+	
+	<table id="load" width="700" border="0" align="center" bgcolor="#FAFAFA" cellpadding="0" cellspacing="0" bordercolor="#000000" style="border-collapse:collapse;display:none ">
+	  <tr>
+	    <td><br><br>
+	    <table width="100%" border="1" cellspacing="0" cellpadding="0" bordercolor="#287BCE" style="border-collapse:collapse ">
+	        <tr bgcolor="#F7F7F6">
+	          <td width="20%" height="100" valign="middle">
+			    <table align='center' width='500'>
+			      <tr>
+			       <td colspan='2' align='center' id="progressPersent"><font size="2">
+			        正在进行保存，用时较长，请稍后...
+			        </font>
+			       </td>
+			      </tr>
+			      <tr>
+			        <td id='tdOne' height='25' width=1 bgcolor="blue">&nbsp;</td>
+			        <td id='tdTwo' height='25' width=500 bgColor='#999999'>&nbsp;</td>
+			      </tr>
+			    </table>
+	          </td>
+	        </tr>
+	    </table>
+	    </td>
+	  </tr>
 	</table>
 </form>
 </body>

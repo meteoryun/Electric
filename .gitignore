@@ -42,4 +42,3 @@ _svn
 .deployables
 */.git/*
 #self declare away#
-build/*

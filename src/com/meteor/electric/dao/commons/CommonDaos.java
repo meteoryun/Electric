@@ -55,6 +55,18 @@ public interface CommonDaos<T> {
 	public List<T> findAllEntityObject();
 	
 	/**
+	 * 
+	 * @author		meteor-yun
+	 * @version		1.0
+	 * @createTime	2016年2月1日
+	 * @methodName	findSingleColumsBySpecifyCondition
+	 * @description	通过指定指定的查询条件进行查询,限制必须查询单独的某一列
+	 * @params		sql,指定的查询条件
+	 * @result		List<String>
+	 */
+	public List<String> findSingleColumsBySpecifyCondition(String fieldName);
+	
+	/**
 	 * DAO层公共查询方法,根据前端选择,由各自业务组装条件语句 
 	 * 规则:select * from tableName t where 1=1 #DAO层封装
 	 *      and t.xxx like %% #service层封装
@@ -65,4 +77,14 @@ public interface CommonDaos<T> {
 	 */
 	public List<T> customConditionFind(Map<String, Object[]> assembleCondition);
 
+	/**
+	 * 
+	 * @author meteor-yun
+	 * @version v1.0
+	 * @createTime 2016年5月26日
+	 * @description: 查找指定条件中所有实体数据,限制指定某个属性作为条件
+	 * @param fieldName
+	 * @return List<T>
+	 */
+	public List<T> findSepecifyConditionAllEntityBySingleColums(String fieldName,String value);
 }

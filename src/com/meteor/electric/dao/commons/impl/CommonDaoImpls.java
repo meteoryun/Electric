@@ -81,6 +81,7 @@ public abstract class CommonDaoImpls<T> implements CommonDaos<T>{
 		}
 		
 		this.hibernateTemplate.deleteAll(lists);
+		this.hibernateTemplate.flush();
 	}
 	
 	@Override
@@ -135,5 +136,26 @@ public abstract class CommonDaoImpls<T> implements CommonDaos<T>{
 		}
 		logger.info(lists);
 		return lists;
+	}
+
+	@Override
+	public List<String> findSingleColumsBySpecifyCondition(String fieldName) {
+		String alias = GenericTypeConversion.firstToLowerCase(this.clazz.getSimpleName());
+		String sql = "select distinct " + alias + "." + fieldName +  " from " + this.clazz.getSimpleName() + " " + alias;
+		logger.info("findSingleColumsBySpecifyCondition() sql: " + sql);
+		@SuppressWarnings("unchecked")
+		List<String> lists = (List<String>) this.hibernateTemplate.find(sql);
+		logger.info("return data: " + lists);
+		return lists;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findSepecifyConditionAllEntityBySingleColums(String fieldName,String value) {
+		String alias = GenericTypeConversion.firstToLowerCase(this.clazz.getSimpleName());
+		String sql = " from " + this.clazz.getSimpleName() + " " + alias + " where " + alias + "." + fieldName + "='" + value + "'";
+		logger.info("findSepecifyConditionAllEntityBySingleColums() sql:" + sql);
+		List<?> lists = this.hibernateTemplate.find(sql);
+		return (List<T>) lists;
 	}
 }

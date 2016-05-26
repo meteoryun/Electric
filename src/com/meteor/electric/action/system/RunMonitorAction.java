@@ -39,7 +39,7 @@ public class RunMonitorAction extends CommonAction<RunMonitorCommonInfo> impleme
 		return runMonitorCommonInfoService;
 	}
 	
-	public void prepareFinfindRunMonitorMsg(){
+	public void prepareFindRunMonitorMsg(){
 		if(this.runMonitorCommonInfo != null){
 			this.runMonitorCommonInfo = null;
 		}

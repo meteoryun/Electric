@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 20, 2016 8:53:58 PM by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.meteor.electric.domain.system.DataDictionary" table="DataDictionary">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="typeKey" type="java.lang.String">
+            <column name="typeKey" length="20"/>
+        </property>
+        <property name="itemCode" type="java.lang.Integer">
+            <column name="itemCode" />
+        </property>
+        <property name="itemName" type="java.lang.String">
+            <column name="itemName" length="30"/>
+        </property>
+    </class>
+</hibernate-mapping>
